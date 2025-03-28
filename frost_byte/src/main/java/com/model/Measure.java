@@ -33,14 +33,15 @@ public class Measure {
         this.isRepeat = false;
     }
 
-    public Measure(int beatAmount2, String clef, ArrayList<Note> notes) {
-        this.beatAmount = beatAmount2;
+    public Measure(int beatAmount, String clef) {
+        this.beatAmount = beatAmount;
         this.clef = clef;
-        this.notes = notes;
+        this.notes = new ArrayList<>();
+        this.isRepeat = false;
     }
 
-    public Measure addMeasure(Measure measure) {
-        return measure;
+    public void addNote(Note note) {
+        notes.add(note);
     }
 
     public int setBeatAmount(int beatAmount) {
@@ -53,21 +54,20 @@ public class Measure {
         return this.clef;
     }
 
-    public boolean setIsRepeat(boolean isRepeat) {
+    public void setRepeat(boolean isRepeat) {
         this.isRepeat = isRepeat;
-        return this.isRepeat;
     }
 
     public int getBeatAmount() {
-        return this.beatAmount;
+        return beatAmount;
     }
 
     public String getClef() {
-        return this.clef;
+        return clef;
     }
 
     public ArrayList<Note> getNoteList() {
-        return this.notes;
+        return notes;
     }
 
     public Measure(JSONObject measureJSON) {

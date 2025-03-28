@@ -5,6 +5,8 @@ import java.util.UUID;
 // import org.json.simple.JSONObject;
 // import org.json.simple.parser.JSONParser;
 
+import org.json.simple.JSONObject;
+
 // import java.lang.Thread;
 // import org.jfugue.player.Player;
 // import org.jfugue.pattern.Pattern;
@@ -286,6 +288,22 @@ public class Song {
     public Measure getMeasure(ArrayList<Measure> measureList, int measureNum) {
         return measureList.get(measureNum);
     }
+
+    /*
+     * public JSONObject toJson() {
+     * JSONObject songJson = new JSONObject();
+     * songJson.put("id", id);
+     * songJson.put("title", title);
+     * songJson.put("artist", artist);
+     * songJson.put("userId", author);
+     * songJson.put("genre", genre);
+     * songJson.put("tempo", tempo);
+     * songJson.put("duration", duration);
+     * songJson.put("defTimeSigNumer", defTimeSigNumer);
+     * songJson.put("defTimeSigDenom", defTimeSigDenom);
+     * songJson.put("keySig", defKeySig); // Assuming KeySig has a toJson method
+     * songJson.put("measureList", measureList); // Convert measure list to JSON
+     */
 
     public String toString() {
         return "Title: " + getTitle() + " Author: " + getAuthor();
