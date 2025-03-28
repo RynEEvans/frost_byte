@@ -29,17 +29,18 @@ public class UI { /*
         System.out.println(ANSI_GREEN);
         System.out.println("Traditional");
         System.out.println(ANSI_BLACK);
-        ArrayList<Song> songs = application.getSongsByArtist("Tradtional");
+
+        ArrayList<Song> songs = application.getSongsByArtist("Traditional");
         for (Song song : songs) {
             System.out.println(song.getTitle());
         }
-        System.out.println("Select a song to play");
+
+        System.out.println("\nSelect a song to play");
         System.out.println(ANSI_GREEN);
         System.out.println("Hot Cross Buns");
         System.out.println(ANSI_BLACK);
         Song chosenSong = application.getSongByTitle("Hot Cross Buns");
 
-        Player player = new Player();
         application.playSong(chosenSong);
 
     }
@@ -117,7 +118,7 @@ public class UI { /*
                     "A Horse's Journey",
                     "NeonWave",
                     application.getUser(testUsername1).getID(),
-                    "genre",
+                    "country",
                     "10",
                     "120",
                     4, 4,
@@ -125,6 +126,8 @@ public class UI { /*
                     measureList);
 
             application.makeSong(song);
+            application.playSong(song);
+            DataWriter.saveSongs(song);
 
             for (int i = 0; i < 30; i++) {
                 System.out.print("-");
@@ -136,20 +139,6 @@ public class UI { /*
             }
             System.out.println("");
             System.out.print(ANSI_BLACK);
-            System.out.println("Play song, edit song, Take lesson, log out, search for song, logout");
-            System.out.print(ANSI_GREEN);
-            System.out.println("search for song");
-            System.out.print(ANSI_BLACK);
-            System.out.println("Which song do you want to play?");
-            System.out.print(ANSI_GREEN);
-            System.out.println("A horses journey");
-            System.out.print(ANSI_BLACK);
-
-            Song chosenSong = application.getSongByTitle("A horses journey");
-            Player player = new Player();
-            application.playSong(chosenSong);
-
-            System.out.println("What would you like to do?");
             System.out.println("Play song, edit song, Take lesson, log out, search for song, logout");
 
             System.out.print(ANSI_GREEN);
@@ -272,8 +261,8 @@ public class UI { /*
     }
 
     public void run() {
-        scenario2(); // login and play a song
-        // scenario3();
+        // scenario2();
+        scenario3();
         // scenario1();
 
     }

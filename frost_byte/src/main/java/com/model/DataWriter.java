@@ -2,7 +2,10 @@ package com.model;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,20 +41,21 @@ public class DataWriter extends DataConstants {
     /**
      * Saves the list of songs to the JSON file specified by {@code SONG_FILE_NAME}.
      */
-    public static void saveSongs() {
+    public static void saveSongs(Song song) {
         // Get the songs (if there are any)
         ArrayList<Song> songs = DataLoader.getSongs();
+        songs.add(song);
 
         // If there are no songs, skip saving
         if (songs == null || songs.isEmpty()) {
-            // Nothing to save
+            return;
         }
 
         JSONArray jsonSongs = new JSONArray();
 
-        for (Song song : songs) {
-            if (song != null) { // Ensure the song is not null before processing
-                jsonSongs.add(getSongJSON(song));
+        for (Song sonG : songs) {
+            if (sonG != null) {
+                jsonSongs.add(getSongJSON(sonG));
             }
         }
 
@@ -65,7 +69,8 @@ public class DataWriter extends DataConstants {
     }
 
     /**
-     * Saves the list of lessons to the JSON file specified by {@code LESSON_FILE_NAME}.
+     * Saves the list of lessons to the JSON file specified by
+     * {@code LESSON_FILE_NAME}.
      *
      * @param lessons the list of lessons to save
      */
@@ -109,7 +114,7 @@ public class DataWriter extends DataConstants {
      * @return a JSONObject representing the song.
      */
     public static JSONObject getSongJSON(Song song) {
-        // If the song is null, return an empty song JSON object
+
         if (song == null) {
             return new JSONObject();
         }
@@ -124,14 +129,12 @@ public class DataWriter extends DataConstants {
         songJson.put(SONG_DEF_TIME_SIG_NUMER, song.getDefTimeSigNumer());
         songJson.put(SONG_DEF_TIME_SIG_DENOM, song.getDefTimeSigDenom());
 
-        // Check if key signature is null before calling toString()
         if (song.getDefKeySig() != null) {
             songJson.put(SONG_DEF_KEY_SIG, song.getDefKeySig().toString());
         } else {
-            songJson.put(SONG_DEF_KEY_SIG, "Unknown"); // Default value if null
+            songJson.put(SONG_DEF_KEY_SIG, "Unknown");
         }
 
-        // Check if measureList is null and initialize if necessary
         JSONArray measuresArray = new JSONArray();
         if (song.getMeasureList() != null) {
             for (Measure measure : song.getMeasureList()) {

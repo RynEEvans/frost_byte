@@ -5,6 +5,7 @@ import java.util.UUID;
 // import org.json.simple.JSONObject;
 // import org.json.simple.parser.JSONParser;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 // import java.lang.Thread;
@@ -289,21 +290,67 @@ public class Song {
         return measureList.get(measureNum);
     }
 
-    /*
-     * public JSONObject toJson() {
-     * JSONObject songJson = new JSONObject();
-     * songJson.put("id", id);
-     * songJson.put("title", title);
-     * songJson.put("artist", artist);
-     * songJson.put("userId", author);
-     * songJson.put("genre", genre);
-     * songJson.put("tempo", tempo);
-     * songJson.put("duration", duration);
-     * songJson.put("defTimeSigNumer", defTimeSigNumer);
-     * songJson.put("defTimeSigDenom", defTimeSigDenom);
-     * songJson.put("keySig", defKeySig); // Assuming KeySig has a toJson method
-     * songJson.put("measureList", measureList); // Convert measure list to JSON
-     */
+    public static JSONObject getMeasureJSON(Measure measure) {
+        JSONObject measureJson = new JSONObject();
+        measureJson.put("beatAmount", measure.getBeatAmount());
+        measureJson.put("clef", measure.getClef());
+
+        // Create a JSON array for the notes in the measure
+        JSONArray notesArray = new JSONArray();
+        for (Note note : measure.getNoteList()) {
+            notesArray.add(getNoteJSON(note));
+        }
+        measureJson.put("notes", notesArray);
+        return measureJson;
+    }
+
+    public static JSONObject getNoteJSON(Note note) {
+        JSONObject noteJson = new JSONObject();
+        noteJson.put("pitch", note.getPitch().toString());
+        noteJson.put("accidental", note.getAccidental().toString());
+        noteJson.put("octave", note.getOctave());
+        noteJson.put("length", note.getLength());
+        return noteJson;
+    }
+
+    public static JSONObject getSongJSON(Song song) {
+
+        JSONObject songJson = new JSONObject();
+
+        songJson.put("id", song.id.toString());
+        songJson.put("title", song.getTitle());
+        songJson.put("artist", song.getArtist());
+        songJson.put("author", song.getAuthor().toString());
+        songJson.put("genre", song.getGenre());
+        songJson.put("duration", song.getDuration());
+        songJson.put("tempo", song.getTempo());
+        songJson.put("defTimeSigNumer", song.getDefTimeSigNumer());
+        songJson.put("defTimeSigDenom", song.getDefTimeSigDenom());
+
+        JSONObject keySigJson = getKeySigJSON(song.getDefKeySig());
+        songJson.put("keySig", keySigJson);
+
+        JSONArray measureArray = new JSONArray();
+        for (Measure measure : song.getMeasureList()) {
+            measureArray.add(getMeasureJSON(measure));
+        }
+        songJson.put("measures", measureArray);
+
+        return songJson;
+    }
+
+    private static JSONObject getKeySigJSON(KeySig keySig) {
+        JSONObject keySigJson = new JSONObject();
+        keySigJson.put("key", keySig.getKeySig().toString());
+        keySigJson.put("defPitchA", keySig.getDefPitchA());
+        keySigJson.put("defPitchB", keySig.getDefPitchB());
+        keySigJson.put("defPitchC", keySig.getDefPitchC());
+        keySigJson.put("defPitchD", keySig.getDefPitchD());
+        keySigJson.put("defPitchE", keySig.getDefPitchE());
+        keySigJson.put("defPitchF", keySig.getDefPitchF());
+        keySigJson.put("defPitchG", keySig.getDefPitchG());
+        return keySigJson;
+    }
 
     public String toString() {
         return "Title: " + getTitle() + " Author: " + getAuthor();

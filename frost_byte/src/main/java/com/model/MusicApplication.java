@@ -32,6 +32,7 @@ public class MusicApplication {
 
     public boolean logout() {
         UserList.getInstance().saveUsers();
+
         return true;
         // boolean loggin_in = UserList.getInstance().logout(userName);
         // if
@@ -71,7 +72,8 @@ public class MusicApplication {
             songPattern.setInstrument("Tuba");
             for (Measure measures : chosenSong.getMeasureList()) {
                 for (Note note : measures.getNoteList()) {
-                    songPattern.add(note.getPitch().toString() + note.getAccidental().toString() + note.getOctave() + note.getLength());
+                    songPattern.add(note.getPitch().toString() + note.getAccidental().toString() + note.getOctave()
+                            + note.getLength());
                 }
                 measures.getNotePlacement(measures);
             }
