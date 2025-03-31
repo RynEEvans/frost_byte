@@ -69,7 +69,7 @@ public class zToFugueTester {
                     String genre = (String) songJSON.get("genre");
                     String duration = (String) songJSON.get("duration");
                     String tempo = (String) songJSON.get("tempo");
-                    int defTimeSigNum = Integer.parseInt((String) songJSON.get("defTimeSigNumer"));
+                    int defTimeSigNum = Integer.parseInt((int) songJSON.get("defTimeSigNumer"));
                     int defTimeSigDen = Integer.parseInt((String) songJSON.get("defTimeSigDenom"));
                      // Parse key signature, accepting JSONObject
                     String defKeySigStr = (String) songJSON.get("defKeySig");

@@ -65,13 +65,65 @@ public class DataLoader extends DataConstants {
         ArrayList<Song> songs = new ArrayList<Song>();
 
         try {
-            FileReader reader = new FileReader("json\\songs.json");
+            FileReader reader = new FileReader("frost_byte\\src\\main\\java\\com\\model\\ztestSongs.json");
             JSONParser parser = new JSONParser();
-            JSONArray songsJson = (JSONArray) parser.parse(reader);
+            JSONArray songJson = (JSONArray) new JSONParser().parse(reader);
 
-            for (int i = 0; i < songsJson.size(); i++) {
-                JSONObject songJSON = (JSONObject) songsJson.get(i);
-                songs.add(parseSongJSON(songJSON));
+            for (int i = 0; i < songJson.size(); i++) {
+                JSONObject songJSON = (JSONObject) songJson.get(i);
+                UUID id = UUID.fromString((String) songJSON.get("id"));
+                String title = (String) songJSON.get("title");
+                UUID author = null;
+                if (songJSON.containsKey("author")) {
+                    try {
+                        author = UUID.fromString((String) songJSON.get("author"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                String artist = (String) songJSON.get("artist");
+                String genre = (String) songJSON.get("genre");
+                String duration = (String) songJSON.get("duration");
+                String tempo = (String) songJSON.get("tempo");
+                // Handle time signature, Long or Int value
+                int defTimeSigNumer = (songJSON.get("defTimeSigNumer") instanceof Long)
+                    ? ((Long) songJSON.get("defTimeSigNumer")).intValue()
+                    : Integer.parseInt((String) songJSON.get("defTimeSigNumer"));
+                int defTimeSigDenom = (songJSON.get("defTimeSigDenom") instanceof Long)
+                    ? ((Long) songJSON.get("defTimeSigDenom")).intValue()
+                    : Integer.parseInt((String) songJSON.get("defTimeSigDenom"));
+                String defKeySigStr = (String) songJSON.get("defKeySig");
+                KeySig defKeySig = new KeySig(Keys.valueOf(defKeySigStr), "A", "B", "C", "D", "E", "F", "G");
+                JSONArray measuresJSON = (JSONArray) songJSON.get("measureList");
+                ArrayList<Measure> measures = new ArrayList<Measure>();
+                for (int j = 0; j < measuresJSON.size(); j++) {
+                    JSONObject measureJSON = (JSONObject) measuresJSON.get(j);
+                    int beatAmount = Integer.parseInt((String)measureJSON.get("beatAmount"));
+                    String clef = (String) measureJSON.get("clef");
+                    
+                    JSONArray notes = (JSONArray) measureJSON.get("notes");
+
+                    ArrayList<Note> noteList = new ArrayList<Note>();
+                    for (int r = 0; r < notes.size(); r++) {
+                        JSONObject noteJSON = (JSONObject) notes.get(r);
+                        Note note = new Note();
+                        String tempPitch = (String) noteJSON.get("pitch");
+                        Pitches notePitch = Pitches.valueOf(tempPitch);
+                        note.setPitch(notePitch);
+                        String tempAccidental = (String) noteJSON.get("accidental");
+                        tempAccidental = tempAccidental.toUpperCase();
+                        Accidentals noteAccidetal = Accidentals.valueOf(tempAccidental);
+                        note.setAccidental(noteAccidetal);
+                        note.setOctave(Integer.parseInt((String) noteJSON.get("octave")));
+                        note.setLength((String) noteJSON.get("length"));
+                        noteList.add(note);
+                        
+                    }
+                    Measure measure = new Measure(beatAmount, clef, noteList);
+                    measures.add(measure);
+                }
+
+                songs.add(new Song(id, title, artist, author, genre, duration, tempo, defTimeSigNumer, defTimeSigDenom, defKeySig, measures));
             }
         } catch (Exception e) {
             e.printStackTrace();

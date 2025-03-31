@@ -85,7 +85,7 @@ public class UI { /*
             ArrayList<Measure> measureList = new ArrayList<>();
 
             // Measure 1
-            Measure measure1 = new Measure(4, "treble");
+            Measure measure1 = new Measure(4, "treble", new ArrayList<Note>());
             measure1.addNote(new Note(Pitches.C, "quarter", Accidentals.N, 0, 4, "C4", 4));
             measure1.addNote(new Note(Pitches.D, "quarter", Accidentals.N, 0, 4, "D4", 4));
             measure1.addNote(new Note(Pitches.E, "quarter", Accidentals.N, 0, 4, "E4", 4));
@@ -93,7 +93,7 @@ public class UI { /*
             measureList.add(measure1);
 
             // Measure 2
-            Measure measure2 = new Measure(4, "treble");
+            Measure measure2 = new Measure(4, "treble", new ArrayList<Note>());
             measure2.addNote(new Note(Pitches.G, "quarter", Accidentals.N, 0, 4, "G4", 4));
             measure2.addNote(new Note(Pitches.A, "quarter", Accidentals.N, 0, 4, "A4", 4));
             measure2.addNote(new Note(Pitches.B, "quarter", Accidentals.N, 0, 4, "B4", 4));
