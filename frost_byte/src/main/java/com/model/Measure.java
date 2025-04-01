@@ -36,7 +36,7 @@ public class Measure {
     public Measure(int beatAmount, String clef, ArrayList<Note> notes) {
         this.beatAmount = beatAmount;
         this.clef = clef;
-        this.notes = new ArrayList<>();
+        this.notes = notes;
         this.isRepeat = false;
     }
 

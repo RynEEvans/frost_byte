@@ -78,7 +78,7 @@ public class SongList {
     public Song getSongByTitle(String title) {
         for (int i = 0; i < songs.size(); i++) {
             if (songs.get(i).getTitle().equalsIgnoreCase(title)) {
-                return songs.get(i); // returns the specific song that matches the title
+                return songs.get(i);
             }
         }
         return null;
