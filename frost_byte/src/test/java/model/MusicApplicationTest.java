@@ -10,6 +10,17 @@ import com.model.MusicApplication;
 
 
 public class MusicApplicationTest {
+   /**
+    * 
+    * constructor, dont need to do
+    * login
+    * logout
+    * getters and setters dont need testing
+    * safeToregister
+    * displaySongs
+    * register
+    * makeSong
+    */
     private MusicApplication application = new MusicApplication();
     @Test
     public void testTesting(){
