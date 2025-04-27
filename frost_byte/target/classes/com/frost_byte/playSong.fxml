@@ -10,8 +10,8 @@
       alignment="CENTER" spacing="20.0">
 
    <children>
-      <Label text="This is the Studio View" />
-      <Label text="You can add Studio info here." />
+      <Label text="This is the Lessons View" />
+      <Label text="You can add lessons info here." />
    </children>
 
    <padding>
