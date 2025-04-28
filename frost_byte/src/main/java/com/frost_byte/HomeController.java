@@ -1,7 +1,9 @@
 package com.frost_byte;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import com.model.DataWriter;
 import com.model.Song;
 
 import javafx.fxml.FXML;
@@ -38,6 +40,16 @@ public class HomeController {
     @FXML
     private Button studioButton;
 
+    @FXML
+    private Button settingsButton;
+
+
+    ArrayList<Song> songList = new ArrayList<>();
+
+    public void saveSongs(ArrayList<Song> songslist) {
+        this.songList = songslist;
+    }
+
     public void setPrimaryController(PrimaryController controller) {
         this.primaryController = controller;
     }
@@ -66,6 +78,14 @@ public class HomeController {
             primaryController.showClasses(); // or show specific class screen
     }
 
+    /** Top-right Settings button */
+    @FXML private void showSettingsScreen() {
+        if (primaryController != null) {
+            primaryController.showSettings();
+        }
+    }
+
+
     public void openSongPage(Song selectedSong) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/frost_byte/song.fxml"));
@@ -77,9 +97,19 @@ public class HomeController {
 
             // Update the scene
             Scene scene = new Scene(root);
-            Stage stage = (Stage) songButton.getScene().getWindow();
+            Stage stage = (Stage) contentPane.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void handleLogout() {
+
+        try {
+            DataWriter.saveSongs(songList);
+            App.setRoot("login");
         } catch (IOException e) {
             e.printStackTrace();
         }
